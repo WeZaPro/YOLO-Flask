@@ -1,13 +1,36 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flask App</title>
+    <title>Object Detection</title>
   </head>
   <body>
-    <h1>Hello, Flask!</h1>
-    <p>Welcome to your Flask app.</p>
+    <h1>Object Detection</h1>
+    <form id="uploadForm">
+      <input type="text" id="imageUrl" placeholder="Enter Image URL" required />
+      <button type="submit">Detect</button>
+    </form>
+    <pre id="result"></pre>
+    <script>
+      document.getElementById("uploadForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const response = await fetch("/detect", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image_url: document.getElementById("imageUrl").value,
+          }),
+        });
+        const result = await response.json();
+        document.getElementById("result").textContent = JSON.stringify(
+          result,
+          null,
+          2
+        );
+      };
+    </script>
   </body>
 </html>
