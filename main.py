@@ -20,4 +20,5 @@ def detect():
     return results.pandas().xyxy[0].to_json(orient="records")
 
 if __name__ == '__main__':
-    app.run()
+    # app.run()
+    app.run(port=5000)
